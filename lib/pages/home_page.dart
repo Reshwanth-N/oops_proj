@@ -9,160 +9,267 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text(
+          'FUTURE MARKET',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.5,
+          ),
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: const Icon(Icons.logout, color: Colors.cyan),
             onPressed: () {
-              // Navigate back to login page
               Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) =>  LoginPage()),
+                MaterialPageRoute(builder: (context) => const LoginPage()),
                 (route) => false,
               );
             },
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Welcome Card
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Welcome Back!',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'What would you like to do today?',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[600],
-                      ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.black,
+              Colors.grey[900]!,
+              Colors.black,
+            ],
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Welcome Card with Glowing Effect
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.cyan.withOpacity(0.2),
+                      blurRadius: 10,
+                      spreadRadius: 1,
                     ),
                   ],
                 ),
-              ),
-            ),
-            const SizedBox(height: 24),
-
-            // Quick Actions Grid
-            GridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              mainAxisSpacing: 16,
-              crossAxisSpacing: 16,
-              children: [
-                _buildQuickActionCard(
-                  context,
-                  icon: Icons.person,
-                  title: 'Profile',
-                  color: Colors.blue,
-                ),
-                _buildQuickActionCard(
-                  context,
-                  icon: Icons.settings,
-                  title: 'Settings',
-                  color: Colors.green,
-                ),
-                _buildQuickActionCard(
-                  context,
-                  icon: Icons.notifications,
-                  title: 'Notifications',
-                  color: Colors.orange,
-                ),
-                _buildQuickActionCard(
-                  context,
-                  icon: Icons.help,
-                  title: 'Help',
-                  color: Colors.purple,
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 24),
-
-            // Recent Activity Section
-            const Text(
-              'Recent Activity',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 16),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 5,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.blue[100],
-                      child: const Icon(Icons.history, color: Colors.blue),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Welcome to Future Market',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.cyan,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Explore the marketplace of tomorrow',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ],
                     ),
-                    title: Text('Activity ${index + 1}'),
-                    subtitle: Text('Details about activity ${index + 1}'),
-                    trailing: const Icon(Icons.chevron_right),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+
+              // Main Actions Grid
+              GridView.count(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: 2,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 20,
+                children: [
+                  _buildMainActionCard(
+                    context,
+                    icon: Icons.shopping_cart,
+                    title: 'Buy Now',
+                    subtitle: 'Explore Products',
+                    color: Colors.cyan,
                     onTap: () {
-                      // Handle activity tap
+                      // TODO: Navigate to buy page
                     },
                   ),
-                );
-              },
-            ),
-          ],
+                  _buildMainActionCard(
+                    context,
+                    icon: Icons.store,
+                    title: 'Sell Items',
+                    subtitle: 'List Your Products',
+                    color: Colors.cyanAccent,
+                    onTap: () {
+                      // TODO: Navigate to sell page
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+
+              // Profile Section
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[900],
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.cyan.withOpacity(0.1),
+                      blurRadius: 10,
+                      spreadRadius: 1,
+                    ),
+                  ],
+                ),
+                child: ListTile(
+                  contentPadding: const EdgeInsets.all(16),
+                  leading: Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.cyan.withOpacity(0.1),
+                    ),
+                    child: const Icon(Icons.person, color: Colors.cyan, size: 30),
+                  ),
+                  title: const Text(
+                    'My Profile',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'View and edit your profile',
+                    style: TextStyle(color: Colors.grey[400]),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, color: Colors.cyan),
+                  onTap: () {
+                    // TODO: Navigate to profile page
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Recent Transactions
+              const Text(
+                'Recent Transactions',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 16),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.cyan.withOpacity(0.2),
+                        child: const Icon(Icons.receipt_long, color: Colors.cyan),
+                      ),
+                      title: Text(
+                        'Transaction #${1000 + index}',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        'Completed on ${DateTime.now().subtract(Duration(days: index)).toString().split(' ')[0]}',
+                        style: TextStyle(color: Colors.grey[400]),
+                      ),
+                      trailing: const Icon(Icons.chevron_right, color: Colors.cyan),
+                      onTap: () {
+                        // TODO: Show transaction details
+                      },
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Handle new action
+          // TODO: Add new listing
         },
-        child: const Icon(Icons.add),
+        backgroundColor: Colors.cyan,
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
 
-  Widget _buildQuickActionCard(
+  Widget _buildMainActionCard(
     BuildContext context, {
     required IconData icon,
     required String title,
+    required String subtitle,
     required Color color,
+    required VoidCallback onTap,
   }) {
     return Card(
-      elevation: 2,
+      elevation: 8,
       child: InkWell(
-        onTap: () {
-          // Handle quick action tap
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(15),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.grey[900]!,
+                Colors.grey[850]!,
+              ],
+            ),
+          ),
+          padding: const EdgeInsets.all(20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: 40,
-                color: color,
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: color.withOpacity(0.1),
+                ),
+                child: Icon(
+                  icon,
+                  size: 40,
+                  color: color,
+                ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey[400],
                 ),
                 textAlign: TextAlign.center,
               ),
