@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/user_stats.dart';
+import '../models/user_data.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -10,13 +11,23 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final UserStats _userStats = UserStats();
+  final UserData _userData = UserData();
 
-  // Add controllers for editing
-  final _nameController = TextEditingController(text: 'N Reshwanth');
-  final _ageController = TextEditingController(text: '18');
-  final _emailController = TextEditingController(text: 'project@example.com');
-  final _phoneController = TextEditingController(text: '+91 98348 23401');
+  // Update controllers to use UserData
+  late final TextEditingController _nameController;
+  late final TextEditingController _ageController;
+  late final TextEditingController _emailController;
+  late final TextEditingController _phoneController;
   bool _isEditing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: _userData.name);
+    _ageController = TextEditingController(text: _userData.age);
+    _emailController = TextEditingController(text: _userData.email);
+    _phoneController = TextEditingController(text: _userData.phone);
+  }
 
   void _showEditDialog(String title, TextEditingController controller, IconData icon) {
     showDialog(
@@ -43,7 +54,23 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           ElevatedButton(
             onPressed: () {
-              setState(() {});
+              setState(() {
+                // Update the persistent data
+                switch (title) {
+                  case 'Name':
+                    _userData.updateName(controller.text);
+                    break;
+                  case 'Age':
+                    _userData.updateAge(controller.text);
+                    break;
+                  case 'Email':
+                    _userData.updateEmail(controller.text);
+                    break;
+                  case 'Phone':
+                    _userData.updatePhone(controller.text);
+                    break;
+                }
+              });
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

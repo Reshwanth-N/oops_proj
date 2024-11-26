@@ -203,8 +203,8 @@ class _BuyPageState extends State<BuyPage> {
                   : SliverGrid(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1,
-                  mainAxisSpacing: 1,
-                  crossAxisSpacing: 1,
+                  mainAxisSpacing: 16,
+                  crossAxisSpacing: 16,
                   childAspectRatio: 1,
                 ),
                 delegate: SliverChildBuilderDelegate(
@@ -269,20 +269,37 @@ class _BuyPageState extends State<BuyPage> {
               height: 150,
               width: double.infinity,
               fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Container(
+                  height: 150,
+                  width: double.infinity,
+                  color: Colors.grey[850],
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                          : null,
+                    ),
+                  ),
+                );
+              },
               errorBuilder: (context, error, stackTrace) {
                 return Container(
                   height: 150,
+                  width: double.infinity,
                   color: Colors.grey[850],
-                  child: const Icon(Icons.image_not_supported, 
-                    size: 50, 
-                    color: Colors.grey
+                  child: const Icon(
+                    Icons.image_not_supported,
+                    size: 50,
+                    color: Colors.grey,
                   ),
                 );
               },
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(12.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -304,7 +321,7 @@ class _BuyPageState extends State<BuyPage> {
                     color: Colors.cyan,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 8),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
@@ -333,4 +350,5 @@ class _BuyPageState extends State<BuyPage> {
       ),
     );
   }
+
 }

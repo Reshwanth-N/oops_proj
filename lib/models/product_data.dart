@@ -9,7 +9,7 @@ class ProductData {
       id: _uuid.v4(),
       title: 'Engineering Books Set',
       price: 1499.00,
-      imageUrl: 'https://via.placeholder.com/150',
+      imageUrl: 'https://www.wiley.com/en-br/Mechanical+Engineers%27+Handbook%2C+4+Volume+Set%2C+4th+Edition-p-9781118118993',
       category: 'Books',
       description: 'Complete set of engineering reference books',
       condition: 'Like New',
@@ -67,7 +67,7 @@ class ProductData {
     ),
     Product(
       id: _uuid.v4(),
-      title: 'Smartwatch - Samsung Galaxy Watch 5',
+      title: 'Smartwatch - Samsung Galaxy Watch',
       price: 12999.00,
       imageUrl: 'https://via.placeholder.com/150',
       category: 'Electronics',

@@ -110,15 +110,15 @@ class _SignupPageState extends State<SignupPage> {
                     prefixIcon: Icon(Icons.lock_outline),
                     border: OutlineInputBorder(),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return 'Please enter your password';
+                  //   }
+                  //   if (value.length < 6) {
+                  //     return 'Password must be at least 6 characters';
+                  //   }
+                  //   return null;
+                  // },
                 ),
                 const SizedBox(height: 20),
 

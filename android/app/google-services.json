@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "254012701246",
+    "project_id": "campus-app-iiitv",
+    "storage_bucket": "campus-app-iiitv.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254012701246:android:6bb1852dbcb0a54c01ef6f",
+        "android_client_info": {
+          "package_name": "com.example.test_proj"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTb69tLcAsUubIvszxwLhFcwqbK_wj-ss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254012701246:android:e5b0b921a327349d01ef6f",
+        "android_client_info": {
+          "package_name": "com.sirmaur.campusmart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTb69tLcAsUubIvszxwLhFcwqbK_wj-ss"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

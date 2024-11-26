@@ -38,11 +38,25 @@ class _PaymentPageState extends State<PaymentPage> {
           title: const Row(
             children: [
               Icon(Icons.check_circle_outline, color: Colors.cyan),
-              SizedBox(width: 8),
-              Text('Payment Successful'),
+              SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  'Payment Successful',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
-          content: Text('Payment of ₹${widget.totalAmount.toStringAsFixed(2)} processed successfully.'),
+          content: SingleChildScrollView(
+            child: Text(
+              'Payment of ₹${widget.totalAmount.toStringAsFixed(2)} processed successfully.',
+              style: const TextStyle(fontSize: 16),
+            ),
+          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -56,6 +70,8 @@ class _PaymentPageState extends State<PaymentPage> {
       );
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
