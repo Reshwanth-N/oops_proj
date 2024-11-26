@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:test_proj/pages/sell_page.dart';
 
+import '../utils/page_transitions.dart';
 import 'login_page.dart';
 import 'profile_page.dart';
 import 'all_items_page.dart';
 import 'buy_page.dart';
+import 'utils/page_transitions.dart';
+import 'transaction_history_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -24,9 +27,8 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout, color: Colors.cyan),
             onPressed: () {
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-                    (route) => false,
+              Navigator.of(context).pushReplacement(
+                PageTransitions.fadeTransition(const LoginPage()),
               );
             },
           ),
@@ -225,6 +227,27 @@ class HomePage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Recent Activity',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          PageTransitions.slideTransition(
+                            TransactionHistoryPage(),
+                            direction: SlideDirection.right,
+                          ),
+                        );
+                      },
+                      child: const Text('View All'),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16),
                 ListView.builder(

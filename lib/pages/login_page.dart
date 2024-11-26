@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../utils/page_transitions.dart';
 import 'signup_page.dart';
 import 'home_page.dart';
+import 'utils/page_transitions.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -115,7 +117,13 @@ class _LoginPageState extends State<LoginPage> {
                       try{
                         final loginuser=await _auth.signInWithEmailAndPassword(email: email, password: password);
                         if(loginuser!=null){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                          Navigator.pushReplacement(
+                            context,
+                            PageTransitions.slideTransition(
+                              const HomePage(),
+                              direction: SlideDirection.right,
+                            ),
+                          );
                         }
                         else{
 
@@ -138,9 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const SignupPage(),
-                      ),
+                      PageTransitions.scaleTransition(const SignupPage()),
                     );
                   },
                   child: const Text(
