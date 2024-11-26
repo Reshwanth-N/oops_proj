@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'signup_page.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -25,6 +26,12 @@ class _LoginPageState extends State<LoginPage> {
       // TODO: Implement login logic
       print('Email: ${_emailController.text}');
       print('Password: ${_passwordController.text}');
+      // TODO: Add actual login logic here
+      
+      // Navigate to home page
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
     }
   }
 
@@ -60,15 +67,15 @@ class _LoginPageState extends State<LoginPage> {
                     prefixIcon: Icon(Icons.email_outlined),
                     border: OutlineInputBorder(),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    if (!value.contains('@')) {
-                      return 'Please enter a valid email';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return 'Please enter your email';
+                  //   }
+                  //   if (!value.contains('@')) {
+                  //     return 'Please enter a valid email';
+                  //   }
+                  //   return null;
+                  // },
                 ),
                 const SizedBox(height: 20),
                 
@@ -82,15 +89,15 @@ class _LoginPageState extends State<LoginPage> {
                     prefixIcon: Icon(Icons.lock_outline),
                     border: OutlineInputBorder(),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value == null || value.isEmpty) {
+                  //     return 'Please enter your password';
+                  //   }
+                  //   if (value.length < 6) {
+                  //     return 'Password must be at least 6 characters';
+                  //   }
+                  //   return null;
+                  // },
                 ),
                 const SizedBox(height: 20),
                 

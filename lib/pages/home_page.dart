@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:test_proj/pages/sell_page.dart';
 
 import 'login_page.dart';
+import 'profile_page.dart';
+import 'all_items_page.dart';
+import 'buy_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,7 +14,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'FUTURE MARKET',
+          'Campus Bazaar',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             letterSpacing: 1.5,
@@ -64,7 +68,7 @@ class HomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          'Welcome to Future Market',
+                          'Welcome to Campus Bazaar',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -101,7 +105,12 @@ class HomePage extends StatelessWidget {
                     subtitle: 'Explore Products',
                     color: Colors.cyan,
                     onTap: () {
-                      // TODO: Navigate to buy page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BuyPage(),
+                        ),
+                      );
                     },
                   ),
                   _buildMainActionCard(
@@ -111,10 +120,50 @@ class HomePage extends StatelessWidget {
                     subtitle: 'List Your Products',
                     color: Colors.cyanAccent,
                     onTap: () {
-                      // TODO: Navigate to sell page
-                    },
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SellPage(),
+                        ),
+                      );
+                    }
                   ),
                 ],
+              ),
+              const SizedBox(height: 20),
+              Card(
+                child: ListTile(
+                  leading: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.cyan.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Icon(
+                      Icons.list_alt,
+                      color: Colors.cyan,
+                    ),
+                  ),
+                  title: const Text(
+                    'View All Items',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  subtitle: Text(
+                    'See all available products',
+                    style: TextStyle(color: Colors.grey[400]),
+                  ),
+                  trailing: const Icon(Icons.chevron_right, color: Colors.cyan),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AllItemsPage(),
+                      ),
+                    );
+                  },
+                ),
               ),
               const SizedBox(height: 30),
 
@@ -155,7 +204,12 @@ class HomePage extends StatelessWidget {
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios, color: Colors.cyan),
                   onTap: () {
-                    // TODO: Navigate to profile page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfilePage(),
+                      ),
+                    );
                   },
                 ),
               ),
