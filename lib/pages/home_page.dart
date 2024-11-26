@@ -6,8 +6,6 @@ import 'login_page.dart';
 import 'profile_page.dart';
 import 'all_items_page.dart';
 import 'buy_page.dart';
-import 'utils/page_transitions.dart';
-import 'transaction_history_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -100,7 +98,7 @@ class HomePage extends StatelessWidget {
                   crossAxisCount: 2,
                   mainAxisSpacing: 20,
                   crossAxisSpacing: 20,
-                  childAspectRatio: 2/3,
+                  childAspectRatio: 2 / 3,
                   children: [
                     _buildMainActionCard(
                       context,
@@ -217,78 +215,10 @@ class HomePage extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: 20),
-
-                // Recent Transactions
-                const Text(
-                  'Recent Transactions',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Recent Activity',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageTransitions.slideTransition(
-                            TransactionHistoryPage(),
-                            direction: SlideDirection.right,
-                          ),
-                        );
-                      },
-                      child: const Text('View All'),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.cyan.withOpacity(0.2),
-                          child: const Icon(Icons.receipt_long, color: Colors.cyan),
-                        ),
-                        title: Text(
-                          'Transaction #${1000 + index}',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Text(
-                          'Completed on ${DateTime.now().subtract(Duration(days: index)).toString().split(' ')[0]}',
-                          style: TextStyle(color: Colors.grey[400]),
-                        ),
-                        trailing: const Icon(Icons.chevron_right, color: Colors.cyan),
-                        onTap: () {
-                          // TODO: Show transaction details
-                        },
-                      ),
-                    );
-                  },
-                ),
               ],
             ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // TODO: Add new listing
-        },
-        backgroundColor: Colors.cyan,
-        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
