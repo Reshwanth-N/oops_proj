@@ -267,7 +267,7 @@ class _BuyPageState extends State<BuyPage> {
             imageUrl,
             height: 150,
             width: double.infinity,
-            fit: BoxFit.cover, // Adjust the BoxFit value as needed
+            fit: BoxFit.contain, // Adjust the BoxFit value as needed
             loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) return child;
               return Container(
