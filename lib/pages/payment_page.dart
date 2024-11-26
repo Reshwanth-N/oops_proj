@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/cart_model.dart';
+import '../models/transaction_model.dart';
+import '../utils/page_transitions.dart';
+import 'home_page.dart';
 
 class PaymentPage extends StatefulWidget {
   final double totalAmount;
@@ -32,6 +35,19 @@ class _PaymentPageState extends State<PaymentPage> {
 
   void _processPayment() {
     if (_formKey.currentState!.validate()) {
+      // Create a new transaction record
+      final transaction = Transaction(
+        id: DateTime.now().toString(),
+        title: 'Purchase',
+        amount: widget.totalAmount,
+        date: DateTime.now(),
+        type: 'buy',
+        status: 'Completed',
+      );
+
+      // Add to transaction history
+      TransactionHistory().addTransaction(transaction);
+
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -62,6 +78,12 @@ class _PaymentPageState extends State<PaymentPage> {
               onPressed: () {
                 Cart().clear(); // Clear the cart after successful payment
                 Navigator.of(context).popUntil((route) => route.isFirst);
+                Navigator.pushReplacement(
+                  context,
+                  PageTransitions.fadeTransition(
+                    const HomePage(),
+                  ),
+                );
               },
               child: const Text('OK'),
             ),

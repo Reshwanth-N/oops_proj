@@ -6,6 +6,7 @@ import 'login_page.dart';
 import 'profile_page.dart';
 import 'all_items_page.dart';
 import 'buy_page.dart';
+import 'transaction_history_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -92,47 +93,124 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 30),
 
                 // Main Actions Grid
-                GridView.count(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 20,
-                  childAspectRatio: 2 / 3,
+                Row(
                   children: [
-                    _buildMainActionCard(
-                      context,
-                      icon: Icons.shopping_cart,
-                      title: 'Buy Now',
-                      subtitle: 'Explore Products',
-                      color: Colors.cyan,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BuyPage(),
-                          ),
-                        );
-                      },
+                    Expanded(
+                      child: _buildMainActionCard(
+                        context,
+                        icon: Icons.shopping_bag_outlined,
+                        title: 'Buy Items',
+                        subtitle: 'Browse available items',
+                        color: Colors.cyan,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BuyPage(),
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                    _buildMainActionCard(
-                      context,
-                      icon: Icons.store,
-                      title: 'Sell Items',
-                      subtitle: 'List Your Products',
-                      color: Colors.cyanAccent,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SellPage(),
-                          ),
-                        );
-                      },
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: _buildMainActionCard(
+                        context,
+                        icon: Icons.sell_outlined,
+                        title: 'Sell Items',
+                        subtitle: 'List items for sale',
+                        color: Colors.cyan,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SellPage(),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+
+                const SizedBox(height: 16),
+
+                // Transaction History Button
+                Card(
+                  elevation: 8,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageTransitions.slideTransition(
+                          TransactionHistoryPage(),
+                          direction: SlideDirection.right,
+                        ),
+                      );
+                    },
+                    borderRadius: BorderRadius.circular(15),
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.grey[900]!,
+                            Colors.grey[850]!,
+                          ],
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.cyan.withOpacity(0.1),
+                            ),
+                            child: const Icon(
+                              Icons.history,
+                              size: 24,
+                              color: Colors.cyan,
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Transaction History',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  'View your past transactions',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[400],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Icon(
+                            Icons.chevron_right,
+                            color: Colors.cyan,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
                 Card(
                   child: ListTile(
                     leading: Container(
