@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'signup_page.dart';
 import 'home_page.dart';
@@ -10,6 +11,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final _auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -106,7 +109,22 @@ class _LoginPageState extends State<LoginPage> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: _handleLogin,
+                    onPressed: ()async {
+                      String email = _emailController.text.trim();
+                      String password = _passwordController.text.trim();
+                      try{
+                        final loginuser=await _auth.signInWithEmailAndPassword(email: email, password: password);
+                        if(loginuser!=null){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>HomePage()));
+                        }
+                        else{
+
+                        }
+                      }
+                      catch(e){
+                        print(e);
+                      }
+                    },
                     child: const Text(
                       'Login',
                       style: TextStyle(fontSize: 18),

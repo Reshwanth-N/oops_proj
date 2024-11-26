@@ -1,3 +1,17 @@
+// This is your project-level build.gradle (usually located in the root of your Android project)
+
+buildscript {
+    repositories {
+        google()  // Add Google's Maven repository
+        mavenCentral()  // Add Maven Central repository
+    }
+    dependencies {
+        // Correct location for Google services classpath
+        classpath 'com.android.tools.build:gradle:7.0.4'  // Ensure you're using the correct version of the Android Gradle plugin
+        classpath 'com.google.gms:google-services:4.4.2'  // Add Google Services classpath here
+    }
+}
+
 allprojects {
     repositories {
         google()
@@ -9,6 +23,7 @@ rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
 subprojects {
     project.evaluationDependsOn(":app")
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/user_stats.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -8,6 +9,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final UserStats _userStats = UserStats();
+
   // Add controllers for editing
   final _nameController = TextEditingController(text: 'N Reshwanth');
   final _ageController = TextEditingController(text: '18');
@@ -234,7 +237,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   _buildInfoItem(
                     icon: Icons.sell_outlined,
                     label: 'Items Sold',
-                    value: '12',
+                    value: '${_userStats.itemsSold}',
                   ),
                 ],
               ),

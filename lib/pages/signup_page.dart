@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'home_page.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -8,6 +11,9 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+
+  final _auth = FirebaseAuth.instance;
+
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -143,7 +149,23 @@ class _SignupPageState extends State<SignupPage> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: _handleSignup,
+                    onPressed: () async {
+                      String email = _emailController.text.trim();
+                      String password = _passwordController.text.trim();
+                      String name = _nameController.text.trim();
+                      try {
+                        final user = await _auth.createUserWithEmailAndPassword(
+                          email: email,
+                          password: password,
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
                     child: const Text(
                       'Sign Up',
                       style: TextStyle(fontSize: 18),

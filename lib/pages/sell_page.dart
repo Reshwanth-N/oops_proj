@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 import '../models/product_data.dart';
 import '../models/product_model.dart';
 import 'all_items_page.dart';
+import '../models/user_stats.dart';
 
 class SellPage extends StatefulWidget {
   const SellPage({super.key});
@@ -17,6 +18,13 @@ class _SellPageState extends State<SellPage> {
   final _descriptionController = TextEditingController();
   final _priceController = TextEditingController();
   String _selectedCategory = 'Electronics';
+  final UserStats _userStats = UserStats();
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize any required data here
+  }
 
   @override
   void dispose() {
@@ -43,7 +51,10 @@ class _SellPageState extends State<SellPage> {
         location: 'Default Location', // Replace with location input if needed
       );
 
-      ProductData.addProduct(newProduct);
+      setState(() {
+        ProductData.addProduct(newProduct);
+        _userStats.incrementSoldItems();
+      });
 
       // Clear the form
       _titleController.clear();
