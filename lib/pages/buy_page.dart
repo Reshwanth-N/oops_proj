@@ -263,40 +263,41 @@ class _BuyPageState extends State<BuyPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: Image.network(
-              imageUrl,
-              height: 150,
-              width: double.infinity,
-              fit: BoxFit.cover,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Container(
-                  height: 150,
-                  width: double.infinity,
-                  color: Colors.grey[850],
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
-                          : null,
-                    ),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),            child: Image.network(
+            imageUrl,
+            height: 150,
+            width: double.infinity,
+            fit: BoxFit.cover, // Adjust the BoxFit value as needed
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Container(
+                height: 150,
+                width: double.infinity,
+                color: Colors.grey[850],
+                child: Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                        (loadingProgress.expectedTotalBytes ?? 1)
+                        : null,
                   ),
-                );
-              },
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  height: 150,
-                  width: double.infinity,
-                  color: Colors.grey[850],
-                  child: const Icon(
-                    Icons.image_not_supported,
-                    size: 50,
-                    color: Colors.grey,
-                  ),
-                );
-              },
-            ),
+                ),
+              );
+            },
+            errorBuilder: (context, error, stackTrace) {
+              return Container(
+                height: 150,
+                width: double.infinity,
+                color: Colors.grey[850],
+                child: const Icon(
+                  Icons.image_not_supported,
+                  size: 50,
+                  color: Colors.grey,
+                ),
+              );
+            },
+          ),
+
           ),
           Padding(
             padding: const EdgeInsets.all(12.0),
