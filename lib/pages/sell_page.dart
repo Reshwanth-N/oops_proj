@@ -50,19 +50,31 @@ class _SellPageState extends State<SellPage> {
 
   void _handleListItem() {
     if (_formKey.currentState!.validate()) {
-      // Generate a unique ID
-      final String uniqueId = Uuid().v4();
+      if (_selectedImage == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please add a photo of your item'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
 
-      // Create a new Product object
+      // Generate a unique ID
+      final String uniqueId = const Uuid().v4();
+
+      // Create a new Product object with the captured image
       final newProduct = Product(
         id: uniqueId,
         title: _titleController.text,
         price: double.parse(_priceController.text),
-        imageUrl: _selectedImage?.path ?? 'https://via.placeholder.com/150', // Use selected image path or default
+        imageUrl: _selectedImage!.path, // Use the local file path
         category: _selectedCategory,
         description: _descriptionController.text,
         condition: 'New',
-        location: 'Default Location',
+        location: 'Campus Location', // You might want to make this dynamic
+        isNegotiable: true,
+        sellerId: 'user_id', // You might want to get this from user authentication
       );
 
       setState(() {
