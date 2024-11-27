@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:uuid/uuid.dart';
 import '../models/product_data.dart';
 import '../models/product_model.dart';
+import '../models/transaction_model.dart';
 import 'all_items_page.dart';
 import '../models/user_stats.dart';
 
@@ -49,16 +50,6 @@ class _SellPageState extends State<SellPage> {
 
   void _handleListItem() {
     if (_formKey.currentState!.validate()) {
-      if (_selectedImage == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please add an image!'),
-            backgroundColor: Colors.red,
-          ),
-        );
-        return;
-      }
-
       // Generate a unique ID
       final String uniqueId = Uuid().v4();
 
@@ -67,7 +58,7 @@ class _SellPageState extends State<SellPage> {
         id: uniqueId,
         title: _titleController.text,
         price: double.parse(_priceController.text),
-        imageUrl: _selectedImage!.path, // Use the selected image path
+        imageUrl: _selectedImage?.path ?? 'https://via.placeholder.com/150', // Use selected image path or default
         category: _selectedCategory,
         description: _descriptionController.text,
         condition: 'New',
@@ -77,13 +68,28 @@ class _SellPageState extends State<SellPage> {
       setState(() {
         ProductData.addProduct(newProduct);
         _userStats.incrementSoldItems();
+
+        // Create a transaction record for the sale
+        final transaction = Transaction(
+          id: DateTime.now().toString(),
+          title: _titleController.text,
+          amount: double.parse(_priceController.text),
+          date: DateTime.now(),
+          type: 'sell',
+          status: 'Listed',
+        );
+
+        // Add to transaction history
+        TransactionHistory().addTransaction(transaction);
       });
 
       // Clear the form
       _titleController.clear();
       _descriptionController.clear();
       _priceController.clear();
-      _selectedImage = null;
+      setState(() {
+        _selectedImage = null;
+      });
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -92,6 +98,7 @@ class _SellPageState extends State<SellPage> {
         ),
       );
 
+      Navigator.pop(context);
       // Navigate to all items page
       Navigator.push(
         context,
@@ -176,7 +183,6 @@ class _SellPageState extends State<SellPage> {
                   ),
                 ),
 
-                // Rest of the form...
                 // Title Field
                 TextFormField(
                   controller: _titleController,
