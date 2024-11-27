@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:uuid/uuid.dart';
 import '../models/product_data.dart';
 import '../models/product_model.dart';
@@ -19,12 +21,9 @@ class _SellPageState extends State<SellPage> {
   final _priceController = TextEditingController();
   String _selectedCategory = 'Electronics';
   final UserStats _userStats = UserStats();
+  File? _selectedImage;
 
-  @override
-  void initState() {
-    super.initState();
-    // Initialize any required data here
-  }
+  final ImagePicker _imagePicker = ImagePicker();
 
   @override
   void dispose() {
@@ -34,8 +33,32 @@ class _SellPageState extends State<SellPage> {
     super.dispose();
   }
 
+  Future<void> _pickImage() async {
+    final XFile? image = await _imagePicker.pickImage(
+      source: ImageSource.camera, // Change to ImageSource.gallery for gallery selection
+      maxWidth: 800, // Resize the image to a manageable size
+      maxHeight: 800,
+    );
+
+    if (image != null) {
+      setState(() {
+        _selectedImage = File(image.path);
+      });
+    }
+  }
+
   void _handleListItem() {
     if (_formKey.currentState!.validate()) {
+      if (_selectedImage == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please add an image!'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+
       // Generate a unique ID
       final String uniqueId = Uuid().v4();
 
@@ -44,11 +67,11 @@ class _SellPageState extends State<SellPage> {
         id: uniqueId,
         title: _titleController.text,
         price: double.parse(_priceController.text),
-        imageUrl: 'https://via.placeholder.com/150', // Default image for now
+        imageUrl: _selectedImage!.path, // Use the selected image path
         category: _selectedCategory,
         description: _descriptionController.text,
-        condition: 'New', // Add a default condition or replace with dynamic input
-        location: 'Default Location', // Replace with location input if needed
+        condition: 'New',
+        location: 'Default Location',
       );
 
       setState(() {
@@ -60,6 +83,7 @@ class _SellPageState extends State<SellPage> {
       _titleController.clear();
       _descriptionController.clear();
       _priceController.clear();
+      _selectedImage = null;
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -111,36 +135,48 @@ class _SellPageState extends State<SellPage> {
               children: [
                 // Image Upload Section
                 Center(
-                  child: Container(
-                    height: 200,
-                    width: double.infinity,
-                    margin: const EdgeInsets.only(bottom: 24),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[900],
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color: Colors.cyan.withOpacity(0.5)),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.add_photo_alternate_outlined,
-                          size: 50,
-                          color: Colors.cyan.withOpacity(0.5),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Add Photos',
-                          style: TextStyle(
-                            color: Colors.grey[400],
-                            fontSize: 16,
+                  child: GestureDetector(
+                    onTap: _pickImage,
+                    child: Container(
+                      height: 200,
+                      width: double.infinity,
+                      margin: const EdgeInsets.only(bottom: 24),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: Colors.cyan.withOpacity(0.5)),
+                        image: _selectedImage != null
+                            ? DecorationImage(
+                          image: FileImage(_selectedImage!),
+                          fit: BoxFit.cover,
+                        )
+                            : null,
+                      ),
+                      child: _selectedImage == null
+                          ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.add_photo_alternate_outlined,
+                            size: 50,
+                            color: Colors.cyan.withOpacity(0.5),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 8),
+                          Text(
+                            'Add Photos',
+                            style: TextStyle(
+                              color: Colors.grey[400],
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      )
+                          : null,
                     ),
                   ),
                 ),
 
+                // Rest of the form...
                 // Title Field
                 TextFormField(
                   controller: _titleController,
